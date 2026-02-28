@@ -1,0 +1,37 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Branch {
+  id           Int          @id @default(autoincrement())
+  nameAr       String       @db.VarChar(255)
+  nameEn       String       @db.VarChar(255)
+  addressAr    String       @db.Text
+  addressEn    String       @db.Text
+  phone        String       @db.VarChar(50)
+  governorate  String       @db.VarChar(50)
+  image        String?      @db.VarChar(255)
+  workingHours String?      @db.VarChar(255)
+  latitude     Float?
+  longitude    Float?
+  status       BranchStatus @default(ACTIVE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([governorate])
+  @@index([status])
+  @@map("branches")
+}
+
+enum BranchStatus {
+  ACTIVE
+  HIDDEN
+  BANNED
+  DELETED
+}

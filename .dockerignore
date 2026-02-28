@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.local
+.env.production
+README.md
+Dockerfile
+docker-compose.yml
+nginx.conf
+deploy.sh
+.dockerignore
+*.log
+.DS_Store
+Thumbs.db

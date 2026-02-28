@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "branches": "Branches",
+    "contact": "Contact",
+    "agents": "Agents"
+  },
+  "agents": {
+    "title": "Agents",
+    "subtitle": "Join Dar Al Mal Agent Network",
+    "description": "Be part of our wide network and start your journey toward financial success with Syria's leading exchange company",
+    "benefit1": "24/7 Technical Support",
+    "benefit2": "Advanced Management System",
+    "benefit3": "Continuous Growth Opportunities",
+    "formTitle": "New Agency Request",
+    "company": "Company / Business Name",
+    "manager": "Contact Person",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "address": "Address / Region",
+    "notes": "Additional Notes (Optional)",
+    "submit": "Submit Request",
+    "cta": "Become an Agent"
+  },
+  "hero": {
+    "titleLine1": "Dar Al Mal",
+    "titleLine2": "Exchange & Money Transfers",
+    "subtitle": "Your Trusted Partner in Currency Exchange and International Transfers",
+    "description": "We offer the best exchange rates and premium financial services with the highest standards of security and transparency",
+    "cta": "Contact Us Now"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Leaders in Currency Exchange Services",
+    "description": "Dar Al Mal Exchange is one of the leading currency exchange companies in the region, with extensive experience in currency exchange and international money transfers. We are committed to providing the best rates and the highest levels of service to our customers.",
+    "valuesTitle": "Our Values",
+    "trust": {
+      "title": "Trust & Security",
+      "description": "Licensed and regulated by the relevant authorities",
+      "detail": "We believe that trust is the foundation of every successful relationship. That's why we uphold the highest standards of transparency and security in all our financial transactions. We hold all necessary licenses from the Central Bank and undergo regular audits to ensure the protection of your money and investments."
+    },
+    "experience": {
+      "title": "Extensive Experience",
+      "description": "Over 15 years serving our customers",
+      "detail": "Over more than 15 years, we have accumulated deep expertise in currency markets and international transfers. Our team includes seasoned experts in financial analysis and risk management, enabling us to offer the best rates and financial advice to our clients at all times."
+    },
+    "service": {
+      "title": "Premium Service",
+      "description": "Professional team and 24/7 customer service",
+      "detail": "Customer satisfaction is our top priority. We provide a dedicated customer service team available around the clock, seven days a week, to answer your inquiries and help you complete your transactions smoothly and quickly. We strive to deliver an exceptional experience with every visit."
+    },
+    "stats": {
+      "customers": "Happy Customers",
+      "currencies": "Currencies",
+      "support": "Customer Support"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive Financial Services",
+    "currency": {
+      "title": "Currency Exchange",
+      "description": "Exchange foreign currencies at the best competitive rates in the market",
+      "features": {
+        "1": "Competitive exchange rates",
+        "2": "Major and minor currencies",
+        "3": "Real-time rate updates",
+        "4": "Transparent pricing"
+      }
+    },
+    "transfer": {
+      "title": "International Transfers",
+      "description": "Transfer money worldwide quickly and securely",
+      "features": {
+        "1": "Fast international transfers",
+        "2": "Secure transactions",
+        "3": "Multiple payment methods",
+        "4": "Track your transfer"
+      }
+    },
+    "gold": {
+      "title": "Gold Trading",
+      "description": "Buy and sell gold and precious metals at live prices",
+      "features": {
+        "1": "Gold bars and coins",
+        "2": "Certified authenticity",
+        "3": "Live market prices",
+        "4": "Buy and sell options"
+      }
+    },
+    "consultation": {
+      "title": "Financial Consultation",
+      "description": "Specialized consultation in investment and money management",
+      "features": {
+        "1": "Investment planning",
+        "2": "Market analysis",
+        "3": "Risk assessment",
+        "4": "Portfolio management"
+      }
+    },
+    "whyChoose": {
+      "title": "Why Choose Dar Al Mal?",
+      "fast": {
+        "title": "Fast Service",
+        "description": "Quick and efficient transactions"
+      },
+      "secure": {
+        "title": "Secure & Safe",
+        "description": "Bank-level security for all transactions"
+      },
+      "rates": {
+        "title": "Best Rates",
+        "description": "Competitive rates guaranteed"
+      },
+      "expert": {
+        "title": "Expert Team",
+        "description": "Professional and knowledgeable staff"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "description": "Round-the-clock customer service"
+      },
+      "trusted": {
+        "title": "Trusted Brand",
+        "description": "15+ years of excellence"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "1": {
+        "question": "What currencies can I exchange at Dar Al Mal?",
+        "answer": "We offer exchange services for over 100 global currencies including USD, EUR, GBP, SAR, AED, and many more. Our rates are updated in real-time to ensure you always get the best price."
+      },
+      "2": {
+        "question": "How long does an international transfer take to arrive?",
+        "answer": "Transfer times vary depending on the destination country and transfer method. Express transfers arrive within minutes, while standard bank transfers take 1 to 3 business days. We provide real-time tracking so you can monitor your transfer status."
+      },
+      "3": {
+        "question": "Do I need an appointment to visit a branch?",
+        "answer": "No appointment is needed. Our branches are open Saturday to Thursday from 9:00 AM to 9:00 PM. You can visit us anytime during working hours and our team will be happy to assist you immediately."
+      },
+      "4": {
+        "question": "What documents are required for a money transfer?",
+        "answer": "For local transfers, a valid national ID or residency permit is sufficient. International transfers require a valid ID, and additional documents may be requested for large amounts in accordance with Central Bank anti-money laundering regulations."
+      },
+      "5": {
+        "question": "Do you offer services for businesses and corporations?",
+        "answer": "Yes, we provide comprehensive financial solutions for businesses including preferential exchange rates for large transfers, currency risk management services, and specialized financial consulting. Contact us to get a custom offer for your organization."
+      }
+    }
+  },
+  "branches": {
+    "title": "Our Branches",
+    "subtitle": "Over 65 branches serving you across Syrian governorates",
+    "viewOnMap": "View on Map",
+    "filterByGovernorate": "Select Governorate",
+    "allGovernorates": "All Governorates",
+    "noBranches": "No branches in this governorate currently",
+    "branchCount": "branches",
+    "governorates": {
+      "damascus": "Damascus",
+      "rif_damascus": "Rif Damascus",
+      "aleppo": "Aleppo",
+      "homs": "Homs",
+      "hama": "Hama",
+      "latakia": "Latakia",
+      "tartous": "Tartous",
+      "deir_ez_zor": "Deir ez-Zor",
+      "idlib": "Idlib",
+      "daraa": "Daraa",
+      "suwayda": "As-Suwayda",
+      "quneitra": "Quneitra",
+      "raqqa": "Raqqa",
+      "hasakah": "Al-Hasakah"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're here to answer your questions",
+    "sendMessage": "Send us a Message",
+    "mainOffice": "Main Office",
+    "emailUs": "Email Us",
+    "mainBranch": "Main Branch",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "message": "Your Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Your message has been sent successfully!",
+      "error": "An error occurred, please try again"
+    },
+    "info": {
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "social": "Follow Us"
+    }
+  },
+  "footer": {
+    "description": "Dar Al Mal Exchange - Your Trusted Partner in Financial Services and Currency Exchange",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "addressValue": "Sarmada - Main Roundabout - Commercial Tower - 1st Floor - Dar Al Mal Co.",
+    "emailValue": "dar.almal.syria@gmail.com",
+    "copyright": "© 2026 Dar Al Mal Exchange. All rights reserved."
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  }
+}
