@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY backend/prisma ./backend/prisma/
 
-RUN npm ci --only=production=false
+RUN npm ci
 
 # ═══════════════════════════════════════════
 # Stage 2: Build the application

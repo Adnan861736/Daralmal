@@ -43,6 +43,9 @@ services:
       NEXT_PUBLIC_MAIN_WHATSAPP: ${NEXT_PUBLIC_MAIN_WHATSAPP}
       NEXT_PUBLIC_SITE_URL: https://daralmall.com
       NODE_ENV: production
+    volumes:
+      # ✅ الصور المرفوعة محفوظة خارج الـ container
+      - uploads_data:/app/public/uploads
     networks:
       - daralmal_network
     # بورت 3000 متاح داخلياً فقط عبر Nginx
@@ -83,6 +86,7 @@ services:
 
 volumes:
   db_data:
+  uploads_data:      # ✅ صور الفروع المرفوعة
   certbot_www:
   certbot_conf:
 
