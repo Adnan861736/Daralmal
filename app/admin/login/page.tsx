@@ -82,9 +82,6 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-xs text-gray-500 dark:text-gray-400">
-          كلمة المرور الافتراضية: admin123
-        </p>
       </div>
     </div>
   );
