@@ -382,7 +382,7 @@ export default function BranchesAdmin() {
                               width={32}
                               height={32}
                               unoptimized
-                              className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                              className="w-8 h-8 rounded-full object-contain bg-gray-100 flex-shrink-0"
                             />
                           )}
                           <div>
@@ -628,7 +628,7 @@ export default function BranchesAdmin() {
                         width={48}
                         height={48}
                         unoptimized
-                        className="w-12 h-12 rounded-lg object-cover border border-gray-200"
+                        className="w-12 h-12 rounded-lg object-contain bg-gray-100 border border-gray-200"
                       />
                       <button
                         onClick={() => setForm((f) => ({ ...f, image: '' }))}
