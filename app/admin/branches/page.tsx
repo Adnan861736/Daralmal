@@ -381,6 +381,7 @@ export default function BranchesAdmin() {
                               alt={branch.nameAr}
                               width={32}
                               height={32}
+                              unoptimized
                               className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                             />
                           )}
@@ -626,6 +627,7 @@ export default function BranchesAdmin() {
                         alt="preview"
                         width={48}
                         height={48}
+                        unoptimized
                         className="w-12 h-12 rounded-lg object-cover border border-gray-200"
                       />
                       <button
