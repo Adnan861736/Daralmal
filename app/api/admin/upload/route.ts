@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { requireAuth } from '@/backend/lib/authMiddleware';
 
@@ -38,8 +38,10 @@ export async function POST(request: NextRequest) {
     // اسم ملف آمن
     const timestamp = Date.now();
     const filename = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
-    const filepath = join(process.cwd(), 'public', 'uploads', 'branches', filename);
+    const uploadDir = join(process.cwd(), 'public', 'uploads', 'branches');
+    const filepath = join(uploadDir, filename);
 
+    await mkdir(uploadDir, { recursive: true });
     await writeFile(filepath, buffer);
 
     return NextResponse.json({ url: `/uploads/branches/${filename}` });

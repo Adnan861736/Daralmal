@@ -66,6 +66,7 @@ export default function BranchesAdmin() {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [geocoding, setGeocoding] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
+  const [deleteAllConfirm, setDeleteAllConfirm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { toasts, addToast, removeToast } = useToast();
@@ -236,6 +237,17 @@ export default function BranchesAdmin() {
     setDeleteConfirm(null);
   };
 
+  const handleDeleteAll = async () => {
+    const res = await fetch('/api/admin/branches', { method: 'DELETE' });
+    if (res.ok) {
+      addToast('تم حذف جميع الفروع نهائياً', 'success');
+      loadBranches();
+    } else {
+      addToast('فشل حذف الفروع', 'error');
+    }
+    setDeleteAllConfirm(false);
+  };
+
   const govLabel = (val: string) =>
     GOVERNORATES.find((g) => g.value === val)?.label || val;
 
@@ -256,7 +268,7 @@ export default function BranchesAdmin() {
             {branches.length} فرع
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={() => window.open('/api/admin/export', '_blank')}
             className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors"
@@ -269,6 +281,30 @@ export default function BranchesAdmin() {
           >
             <span>➕</span> إضافة فرع
           </button>
+          {deleteAllConfirm ? (
+            <div className="flex gap-2 items-center">
+              <span className="text-sm text-red-600 font-medium">حذف جميع الفروع؟</span>
+              <button
+                onClick={handleDeleteAll}
+                className="flex items-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                تأكيد الحذف
+              </button>
+              <button
+                onClick={() => setDeleteAllConfirm(false)}
+                className="px-3 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+              >
+                إلغاء
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setDeleteAllConfirm(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              <span>🗑️</span> حذف الكل
+            </button>
+          )}
         </div>
       </div>
 

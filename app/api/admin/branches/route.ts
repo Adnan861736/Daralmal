@@ -29,6 +29,22 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  const authError = await requireAuth(request);
+  if (authError) return authError;
+
+  try {
+    await prisma.branch.deleteMany({});
+    return NextResponse.json({ message: 'All branches deleted' });
+  } catch (error) {
+    console.error('Delete all branches error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   const authError = await requireAuth(request);
   if (authError) return authError;

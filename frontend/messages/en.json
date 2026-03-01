@@ -100,6 +100,26 @@
         "4": "Portfolio management"
       }
     },
+    "pickup": {
+      "title": "Pickup via Al-Haram Company",
+      "description": "Receive money transfers easily and securely through Al-Haram certified company",
+      "features": {
+        "1": "Fast and secure pickup",
+        "2": "Wide coverage across governorates",
+        "3": "Simple and easy procedures",
+        "4": "24/7 support"
+      }
+    },
+    "shamcash": {
+      "title": "Transfers via Sham Cash",
+      "description": "Transfer money quickly and securely through the Sham Cash electronic platform",
+      "features": {
+        "1": "Instant electronic transfer",
+        "2": "Low fees",
+        "3": "Real-time transfer tracking",
+        "4": "Full transaction security"
+      }
+    },
     "whyChoose": {
       "title": "Why Choose Dar Al Mal?",
       "fast": {

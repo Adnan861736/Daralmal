@@ -47,6 +47,30 @@ export default async function ServicesPage({
         t("consultation.features.4"),
       ],
     },
+    {
+      icon: "📦",
+      image: "/images/service-transfer.jpg",
+      title: t("pickup.title"),
+      description: t("pickup.description"),
+      features: [
+        t("pickup.features.1"),
+        t("pickup.features.2"),
+        t("pickup.features.3"),
+        t("pickup.features.4"),
+      ],
+    },
+    {
+      icon: "💳",
+      image: "/images/service-currency.jpg",
+      title: t("shamcash.title"),
+      description: t("shamcash.description"),
+      features: [
+        t("shamcash.features.1"),
+        t("shamcash.features.2"),
+        t("shamcash.features.3"),
+        t("shamcash.features.4"),
+      ],
+    },
   ];
 
   const whyChooseItems = [

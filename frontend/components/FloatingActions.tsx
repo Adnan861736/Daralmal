@@ -15,6 +15,8 @@ export default function FloatingActions() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const whatsappNumber = process.env.NEXT_PUBLIC_MAIN_WHATSAPP || '0964455302';
+  const waDigits = whatsappNumber.replace(/\D/g, '');
+  const waNumber = waDigits.startsWith('09') ? '963' + waDigits.slice(1) : waDigits.startsWith('963') ? waDigits : '963' + waDigits;
 
   return (
     <div
@@ -23,7 +25,7 @@ export default function FloatingActions() {
     >
       {/* واتساب */}
       <a
-        href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}`}
+        href={`https://wa.me/${waNumber}`}
         target="_blank"
         rel="noopener noreferrer"
         style={{ display: 'flex' }}

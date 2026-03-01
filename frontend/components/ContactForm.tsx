@@ -13,9 +13,16 @@ export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
     "idle"
   );
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setEmailError("البريد الإلكتروني غير صحيح");
+      return;
+    }
+    setEmailError("");
     setStatus("sending");
 
     // Simulate form submission
@@ -60,7 +67,7 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors"
           placeholder={t("name")}
         />
       </div>
@@ -79,9 +86,12 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors"
           placeholder={t("email")}
         />
+        {emailError && (
+          <p className="mt-1 text-sm text-red-500">{emailError}</p>
+        )}
       </div>
 
       <div>
@@ -98,7 +108,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           rows={6}
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors resize-none"
           placeholder={t("message")}
         />
       </div>
