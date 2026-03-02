@@ -1,3 +1,22 @@
+const governorateImages: Record<string, string> = {
+  damascus: "/images/branch-damascus.jpg",
+  rif_damascus: "/images/branch-rif-damascus.jpg",
+  aleppo: "/images/branch-aleppo.jpg",
+  homs: "/images/branch-homs.jpg",
+  hama: "/images/branch-hama.jpg",
+  latakia: "/images/branch-latakia.jpg",
+  tartous: "/images/branch-tartous.jpg",
+  deir_ez_zor: "/images/branch-deir-ez-zor.jpg",
+  idlib: "/images/branch-idlib.jpg",
+  daraa: "/images/branch-daraa.jpg",
+  raqqa: "/images/branch-raqqa.jpg",
+  hasakah: "/images/branch-damascus.jpg",
+};
+
+export function getBranchImage(governorate: string): string {
+  return governorateImages[governorate] || "/images/branch-damascus.jpg";
+}
+
 export interface BranchData {
   id: number;
   governorate: string;
