@@ -25,16 +25,15 @@ export default function ContactForm() {
     setEmailError("");
     setStatus("sending");
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // In a real application, you would send the data to your backend here
     try {
-      // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) })
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error('failed');
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
-
-      // Reset status after 3 seconds
       setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
       setStatus("error");

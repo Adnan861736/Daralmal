@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
+type SubmitStatus = 'idle' | 'sending' | 'success' | 'error';
+
 export default function AgentsPage() {
   const t = useTranslations('agents');
   const params = useParams();
@@ -17,27 +19,29 @@ export default function AgentsPage() {
     address: '',
     notes: '',
   });
+  const [status, setStatus] = useState<SubmitStatus>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const subject = encodeURIComponent(`طلب وكالة جديدة - ${form.company}`);
-    const body = encodeURIComponent(
-      `طلب وكالة جديدة من دار المال\n` +
-      `━━━━━━━━━━━━━━━━━━━━━\n` +
-      `اسم الشركة: ${form.company}\n` +
-      `اسم المسؤول: ${form.manager}\n` +
-      `البريد الإلكتروني: ${form.email}\n` +
-      `رقم الهاتف: ${form.phone}\n` +
-      `العنوان: ${form.address}\n` +
-      (form.notes ? `ملاحظات: ${form.notes}\n` : '')
-    );
-
-    window.location.href = `mailto:dar.almal.syria@gmail.com?subject=${subject}&body=${body}`;
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/agents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('failed');
+      setStatus('success');
+      setForm({ company: '', manager: '', email: '', phone: '', address: '', notes: '' });
+      setTimeout(() => setStatus('idle'), 4000);
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   const benefits = [
@@ -146,11 +150,23 @@ export default function AgentsPage() {
 
             <button
               type="submit"
-              className="w-full bg-gold-500 hover:bg-gold-600 text-white font-bold py-4 px-8 rounded-lg transition-all hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+              disabled={status === 'sending'}
+              className="w-full bg-gold-500 hover:bg-gold-600 disabled:bg-gray-400 text-white font-bold py-4 px-8 rounded-lg transition-all hover:scale-105 disabled:scale-100 shadow-lg flex items-center justify-center gap-2"
             >
               <span>📧</span>
-              {t('submit')} ←
+              {status === 'sending' ? '...جاري الإرسال' : `${t('submit')} ←`}
             </button>
+
+            {status === 'success' && (
+              <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-300 px-4 py-3 rounded-lg text-center">
+                تم إرسال طلبكم بنجاح، سنتواصل معكم قريباً
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-300 px-4 py-3 rounded-lg text-center">
+                حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى
+              </div>
+            )}
           </form>
         </div>
       </section>
