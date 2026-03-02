@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: "67SvPiw3MqAUt9XmzPkgzrXZsIPa-ZTDWZn3HBtLpyU",
+  },
 };
 
 export function generateStaticParams() {
