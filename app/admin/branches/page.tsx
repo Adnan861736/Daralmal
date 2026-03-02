@@ -45,6 +45,7 @@ const GOVERNORATES = [
   { value: 'idlib', label: 'إدلب' },
   { value: 'daraa', label: 'درعا' },
   { value: 'raqqa', label: 'الرقة' },
+  { value: 'hasakah', label: 'الحسكة والقامشلي' },
 ];
 
 const STATUS_LABELS: Record<string, { label: string; className: string }> = {

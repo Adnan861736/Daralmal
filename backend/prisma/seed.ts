@@ -20,8 +20,7 @@ async function main() {
         addressEn: branch.addressEn,
         phone: branch.phone,
         governorate: branch.governorate,
-        status: BranchStatus.ACTIVE,
-        // image, workingHours, latitude, longitude يمكن إضافتها لاحقاً من لوحة التحكم
+        status: branch.status === 'HIDDEN' ? BranchStatus.HIDDEN : BranchStatus.ACTIVE,
       },
     });
   }
