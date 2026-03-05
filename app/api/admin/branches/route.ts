@@ -61,6 +61,8 @@ export async function POST(request: NextRequest) {
         phone: data.phone,
         governorate: data.governorate,
         image: data.image || null,
+        image2: data.image2 || null,
+        image3: data.image3 || null,
         workingHours: data.workingHours || null,
         latitude: data.latitude ? parseFloat(data.latitude) : null,
         longitude: data.longitude ? parseFloat(data.longitude) : null,

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "دار المال للصرافة والحوالات المالية - شريكك الموثوق في تبادل العملات والتحويلات المالية الدولية. أفضل أسعار الصرف وأعلى معايير الأمان. أكثر من 65 فرعاً في جميع المحافظات السورية.",
   keywords: [
-    "صرافة دار المال",
+    "دار المال للصرافة",
     "تبادل العملات سوريا",
     "حوالات مالية",
     "صرف عملات",
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     "Dar Al Mal Exchange",
     "currency exchange Syria",
   ],
-  authors: [{ name: "صرافة دار المال" }],
-  creator: "صرافة دار المال",
+  authors: [{ name: "دار المال للصرافة" }],
+  creator: "دار المال للصرافة",
   metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",

@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import { useToast, ToastContainer } from '@/frontend/components/admin/Toast';
 
 interface Branch {
@@ -14,6 +16,8 @@ interface Branch {
   phone: string;
   governorate: string;
   image: string | null;
+  image2: string | null;
+  image3: string | null;
   workingHours: string | null;
   latitude: number | null;
   longitude: number | null;
@@ -31,6 +35,8 @@ const EMPTY_FORM = {
   latitude: '',
   longitude: '',
   image: '',
+  image2: '',
+  image3: '',
 };
 
 const GOVERNORATES = [
@@ -68,7 +74,14 @@ export default function BranchesAdmin() {
   const [geocoding, setGeocoding] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
   const [deleteAllConfirm, setDeleteAllConfirm] = useState(false);
+  // Crop modal
+  const [cropModal, setCropModal] = useState<{ slot: 'image' | 'image2' | 'image3'; src: string } | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const [completedCrop, setCompletedCrop] = useState<Crop>();
+  const imgRef = useRef<HTMLImageElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInput2Ref = useRef<HTMLInputElement>(null);
+  const fileInput3Ref = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { toasts, addToast, removeToast } = useToast();
 
@@ -113,6 +126,8 @@ export default function BranchesAdmin() {
       latitude: branch.latitude?.toString() || '',
       longitude: branch.longitude?.toString() || '',
       image: branch.image || '',
+      image2: branch.image2 || '',
+      image3: branch.image3 || '',
     });
     setModalOpen(true);
   };
@@ -122,22 +137,70 @@ export default function BranchesAdmin() {
     setEditingBranch(null);
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const openCropModal = (slot: 'image' | 'image2' | 'image3', file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCrop(undefined);
+      setCompletedCrop(undefined);
+      setCropModal({ slot, src: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>, slot: 'image' | 'image2' | 'image3') => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploadingImage(true);
-    try {
-      const fd = new FormData();
-      fd.append('file', file);
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (data.url) setForm((f) => ({ ...f, image: data.url }));
-      else addToast('فشل رفع الصورة', 'error');
-    } catch {
-      addToast('حدث خطأ أثناء رفع الصورة', 'error');
-    } finally {
-      setUploadingImage(false);
-    }
+    e.target.value = '';
+    openCropModal(slot, file);
+  };
+
+  const onImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const { width, height } = e.currentTarget;
+    const c = centerCrop(
+      makeAspectCrop({ unit: '%', width: 90 }, 16 / 9, width, height),
+      width,
+      height
+    );
+    setCrop(c);
+  }, []);
+
+  const confirmCrop = async () => {
+    if (!imgRef.current || !completedCrop || !cropModal) return;
+    const image = imgRef.current;
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = completedCrop.width * scaleX;
+    canvas.height = completedCrop.height * scaleY;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(
+      image,
+      completedCrop.x * scaleX,
+      completedCrop.y * scaleY,
+      completedCrop.width * scaleX,
+      completedCrop.height * scaleY,
+      0, 0,
+      canvas.width,
+      canvas.height
+    );
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      setUploadingImage(true);
+      setCropModal(null);
+      try {
+        const fd = new FormData();
+        fd.append('file', new File([blob], 'crop.jpg', { type: 'image/jpeg' }));
+        const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.url) setForm((f) => ({ ...f, [cropModal.slot]: data.url }));
+        else addToast('فشل رفع الصورة', 'error');
+      } catch {
+        addToast('حدث خطأ أثناء رفع الصورة', 'error');
+      } finally {
+        setUploadingImage(false);
+      }
+    }, 'image/jpeg', 0.92);
   };
 
   const geocodeAddress = async () => {
@@ -168,12 +231,19 @@ export default function BranchesAdmin() {
       addToast('يرجى ملء الحقول المطلوبة: الاسم بالعربي، رقم الهاتف، المحافظة', 'warning');
       return;
     }
+    const lat = form.latitude ? parseFloat(form.latitude) : null;
+    const lng = form.longitude ? parseFloat(form.longitude) : null;
+    if ((form.latitude && (isNaN(lat!) || lat! < -90 || lat! > 90)) ||
+        (form.longitude && (isNaN(lng!) || lng! < -180 || lng! > 180))) {
+      addToast('إحداثيات غير صحيحة، تحقق من خط العرض والطول', 'warning');
+      return;
+    }
     setSaving(true);
     try {
       const payload = {
         ...form,
-        latitude: form.latitude ? parseFloat(form.latitude) : null,
-        longitude: form.longitude ? parseFloat(form.longitude) : null,
+        latitude: lat,
+        longitude: lng,
       };
 
       let res;
@@ -602,51 +672,57 @@ export default function BranchesAdmin() {
                 />
               </div>
 
-              {/* Image Upload */}
+              {/* Image Upload - 3 Slots */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  صورة الفرع
+                  صور الفرع (حتى 3 صور)
                 </label>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploadingImage}
-                    className="flex items-center gap-2 px-4 py-2 text-sm border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors disabled:opacity-50"
-                  >
-                    {uploadingImage ? (
-                      <span className="animate-spin">⏳</span>
-                    ) : (
-                      <span>📷</span>
-                    )}
-                    {uploadingImage ? 'جاري الرفع...' : 'رفع صورة'}
-                  </button>
-                  {form.image && (
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={form.image}
-                        alt="preview"
-                        width={48}
-                        height={48}
-                        unoptimized
-                        className="w-12 h-12 rounded-lg object-contain bg-gray-100 border border-gray-200"
-                      />
-                      <button
-                        onClick={() => setForm((f) => ({ ...f, image: '' }))}
-                        className="text-red-500 text-xs hover:text-red-700"
-                      >
-                        حذف
-                      </button>
-                    </div>
-                  )}
+                <div className="grid grid-cols-3 gap-3">
+                  {(['image', 'image2', 'image3'] as const).map((slot, i) => {
+                    const refs = [fileInputRef, fileInput2Ref, fileInput3Ref];
+                    return (
+                      <div key={slot} className="flex flex-col items-center gap-2">
+                        <span className="text-xs text-gray-500">صورة {i + 1}</span>
+                        {form[slot] ? (
+                          <div className="relative w-full">
+                            <Image
+                              src={form[slot]}
+                              alt={`preview ${i + 1}`}
+                              width={100}
+                              height={80}
+                              unoptimized
+                              className="w-full h-20 rounded-lg object-contain bg-gray-100 border border-gray-200"
+                            />
+                            <button
+                              onClick={() => setForm((f) => ({ ...f, [slot]: '' }))}
+                              className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-600"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => refs[i].current?.click()}
+                            disabled={uploadingImage}
+                            className="w-full h-20 flex flex-col items-center justify-center gap-1 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors disabled:opacity-50 text-gray-400"
+                          >
+                            {uploadingImage ? <span className="animate-spin text-lg">⏳</span> : <span className="text-2xl">📷</span>}
+                            <span className="text-xs">{uploadingImage ? 'جاري الرفع...' : 'رفع صورة'}</span>
+                          </button>
+                        )}
+                        <input
+                          ref={refs[i]}
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          onChange={(e) => handleImageSelect(e, slot)}
+                          className="hidden"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
+                <p className="text-xs text-gray-400 mt-2">ستظهر نافذة القص بعد اختيار الصورة لتحديد الجزء المطلوب</p>
               </div>
 
               {/* Map Location */}
@@ -657,21 +733,21 @@ export default function BranchesAdmin() {
 
                 <div className="flex gap-3 mb-3">
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={form.latitude}
                     onChange={(e) => setForm((f) => ({ ...f, latitude: e.target.value }))}
                     className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="خط العرض (Latitude)"
-                    step="any"
+                    placeholder="خط العرض (Latitude) مثال: 33.51"
                     dir="ltr"
                   />
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={form.longitude}
                     onChange={(e) => setForm((f) => ({ ...f, longitude: e.target.value }))}
                     className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="خط الطول (Longitude)"
-                    step="any"
+                    placeholder="خط الطول (Longitude) مثال: 36.27"
                     dir="ltr"
                   />
                 </div>
@@ -732,6 +808,54 @@ export default function BranchesAdmin() {
               >
                 {saving ? <span className="animate-spin text-base">⏳</span> : null}
                 {saving ? 'جاري الحفظ...' : editingBranch ? 'حفظ التعديلات' : 'إضافة الفرع'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Crop Modal */}
+      {cropModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl">
+            <div className="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">قص الصورة</h3>
+              <button
+                onClick={() => setCropModal(null)}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-gray-500"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-5 overflow-auto max-h-[60vh] flex justify-center bg-gray-50 dark:bg-gray-900">
+              <ReactCrop
+                crop={crop}
+                onChange={(c) => setCrop(c)}
+                onComplete={(c) => setCompletedCrop(c)}
+              >
+                <img
+                  ref={imgRef}
+                  src={cropModal.src}
+                  onLoad={onImageLoad}
+                  alt="crop"
+                  style={{ maxHeight: '55vh', maxWidth: '100%' }}
+                />
+              </ReactCrop>
+            </div>
+            <div className="flex gap-3 justify-end p-5 border-t border-gray-200 dark:border-gray-700">
+              <p className="text-xs text-gray-400 flex-1 self-center">اسحب لتحديد المنطقة المطلوبة ثم اضغط تأكيد</p>
+              <button
+                onClick={() => setCropModal(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                إلغاء
+              </button>
+              <button
+                onClick={confirmCrop}
+                disabled={!completedCrop?.width}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-lg transition-colors"
+              >
+                تأكيد القص والرفع
               </button>
             </div>
           </div>

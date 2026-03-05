@@ -16,7 +16,9 @@ model Branch {
   addressEn    String       @db.Text
   phone        String       @db.VarChar(50)
   governorate  String       @db.VarChar(50)
-  image        String?      @db.VarChar(255)
+  image        String?      @db.VarChar(500)
+  image2       String?      @db.VarChar(500)
+  image3       String?      @db.VarChar(500)
   workingHours String?      @db.VarChar(255)
   latitude     Float?
   longitude    Float?

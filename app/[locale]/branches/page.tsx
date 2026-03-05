@@ -24,6 +24,8 @@ export default async function BranchesPage({
     address: locale === "ar" ? b.addressAr : (b.addressEn || b.addressAr),
     phone: b.phone,
     image: b.image || getBranchImage(b.governorate),
+    image2: b.image2 || null,
+    image3: b.image3 || null,
     workingHours: b.workingHours,
     latitude: b.latitude,
     longitude: b.longitude,

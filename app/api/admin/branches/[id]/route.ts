@@ -48,6 +48,8 @@ export async function PATCH(
     if (data.phone !== undefined) updateData.phone = data.phone;
     if (data.governorate !== undefined) updateData.governorate = data.governorate;
     if (data.image !== undefined) updateData.image = data.image;
+    if (data.image2 !== undefined) updateData.image2 = data.image2;
+    if (data.image3 !== undefined) updateData.image3 = data.image3;
     if (data.workingHours !== undefined) updateData.workingHours = data.workingHours;
     if (data.latitude !== undefined) updateData.latitude = data.latitude ? parseFloat(data.latitude) : null;
     if (data.longitude !== undefined) updateData.longitude = data.longitude ? parseFloat(data.longitude) : null;
