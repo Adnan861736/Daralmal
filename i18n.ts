@@ -10,9 +10,14 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = "ar";
   }
 
+  const messages =
+    locale === "ar"
+      ? (await import("./frontend/messages/ar.json")).default
+      : (await import("./frontend/messages/en.json")).default;
+
   return {
     locale,
-    messages: (await import(`./frontend/messages/${locale}.json`)).default,
+    messages,
   };
 });
 
