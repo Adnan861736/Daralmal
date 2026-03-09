@@ -48,9 +48,43 @@ export default function ContactInfoBoxes() {
         </div>
       </a>
 
+      {/* Compliance Email */}
+      <a
+        href="mailto:compliance@daralmall.com"
+        className={boxClass("compliance-email")}
+        onClick={() => setSelected("compliance-email")}
+      >
+        <div className="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/30">
+          <svg className="w-6 h-6 text-red-500 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">الامتثال والشكاوى</p>
+          <p className={`font-semibold ${selected === "compliance-email" ? "text-gold-600 dark:text-gold-400" : "text-red-500 dark:text-red-400"}`} dir="ltr">compliance@daralmall.com</p>
+        </div>
+      </a>
+
+      {/* Support Email */}
+      <a
+        href="mailto:support@daralmall.com"
+        className={boxClass("support-email")}
+        onClick={() => setSelected("support-email")}
+      >
+        <div className="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/30">
+          <svg className="w-6 h-6 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">الدعم الفني والمساندة</p>
+          <p className={`font-semibold ${selected === "support-email" ? "text-gold-600 dark:text-gold-400" : "text-blue-500 dark:text-blue-400"}`} dir="ltr">support@daralmall.com</p>
+        </div>
+      </a>
+
       {/* Email */}
       <a
-        href="mailto:dar.almal.syria@gmail.com"
+        href="mailto:info@daralmall.com"
         className={boxClass("email")}
         onClick={() => setSelected("email")}
       >
@@ -60,8 +94,8 @@ export default function ContactInfoBoxes() {
           </svg>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t("info.email")}</p>
-          <p className={`font-semibold ${selected === "email" ? "text-gold-600 dark:text-gold-400" : "text-primary-600 dark:text-primary-400"}`} dir="ltr">dar.almal.syria@gmail.com</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">بريد التواصل</p>
+          <p className={`font-semibold ${selected === "email" ? "text-gold-600 dark:text-gold-400" : "text-primary-600 dark:text-primary-400"}`} dir="ltr">info@daralmall.com</p>
         </div>
       </a>
 

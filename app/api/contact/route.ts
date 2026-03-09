@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     await transporter.sendMail({
       from: `"${name}" <${process.env.GMAIL_USER}>`,
-      to: process.env.GMAIL_USER,
+      to: 'support@daralmall.com',
       replyTo: email,
       subject: `رسالة جديدة من الموقع - ${name}`,
       html: `
