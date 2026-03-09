@@ -60,7 +60,7 @@ export default function ContactInfoBoxes() {
           </svg>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">الامتثال والشكاوى</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t("info.complianceEmail")}</p>
           <p className={`font-semibold ${selected === "compliance-email" ? "text-gold-600 dark:text-gold-400" : "text-red-500 dark:text-red-400"}`} dir="ltr">compliance@daralmall.com</p>
         </div>
       </a>
@@ -77,7 +77,7 @@ export default function ContactInfoBoxes() {
           </svg>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">الدعم الفني والمساندة</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t("info.supportEmail")}</p>
           <p className={`font-semibold ${selected === "support-email" ? "text-gold-600 dark:text-gold-400" : "text-blue-500 dark:text-blue-400"}`} dir="ltr">support@daralmall.com</p>
         </div>
       </a>
@@ -94,7 +94,7 @@ export default function ContactInfoBoxes() {
           </svg>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">بريد التواصل</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t("info.contactEmail")}</p>
           <p className={`font-semibold ${selected === "email" ? "text-gold-600 dark:text-gold-400" : "text-primary-600 dark:text-primary-400"}`} dir="ltr">info@daralmall.com</p>
         </div>
       </a>

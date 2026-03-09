@@ -215,6 +215,9 @@
     "info": {
       "phone": "الهاتف",
       "complaints": "رقم الشكاوي",
+      "complianceEmail": "الامتثال والشكاوى",
+      "supportEmail": "الدعم الفني والمساندة",
+      "contactEmail": "بريد التواصل",
       "email": "البريد الإلكتروني",
       "address": "العنوان",
       "social": "تابعنا"

@@ -215,6 +215,9 @@
     "info": {
       "phone": "Phone",
       "complaints": "Complaints Number",
+      "complianceEmail": "Compliance & Complaints",
+      "supportEmail": "Technical Support",
+      "contactEmail": "Contact Email",
       "email": "Email",
       "address": "Address",
       "social": "Follow Us"
